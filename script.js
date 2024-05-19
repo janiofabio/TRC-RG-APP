@@ -13,10 +13,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     let imageBase64 = '';
 
+    const isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+
+    if (isMobile) {
+        captureBtn.style.display = 'inline-block';
+    } else {
+        captureBtn.style.display = 'none';
+    }
+
     captureBtn.addEventListener('click', async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: { exact: "environment" } }
+                video: { facingMode: { ideal: "environment" } }
             });
             video.style.display = 'block';
             snapBtn.style.display = 'block';

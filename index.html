@@ -46,6 +46,14 @@
         canvas {
             display: none;
         }
+        .mobile-only {
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+            .mobile-only {
+                display: inline-block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -54,7 +62,7 @@
         <h2 class="message"></h2>
         <span>Selecione o PDF ou Capture uma Imagem</span>
         <input type="file" class="file">
-        <button class="capture-btn">Capturar Imagem</button>
+        <button class="capture-btn mobile-only">Capturar Imagem</button>
         <video id="video" autoplay></video>
         <button class="snap-btn" style="display: none;">Tirar Foto</button>
         <canvas id="canvas" style="display: none;"></canvas>
