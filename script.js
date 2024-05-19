@@ -14,10 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let imageBase64 = '';
 
     captureBtn.addEventListener('click', async () => {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.style.display = 'block';
-        snapBtn.style.display = 'block';
-        video.srcObject = stream;
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: { exact: "environment" } }
+            });
+            video.style.display = 'block';
+            snapBtn.style.display = 'block';
+            video.srcObject = stream;
+        } catch (err) {
+            console.error("Erro ao acessar a câmera traseira:", err);
+            alert("Não foi possível acessar a câmera traseira. Verifique as permissões e tente novamente.");
+        }
     });
 
     snapBtn.addEventListener('click', () => {
