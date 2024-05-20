@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const snapBtn = document.querySelector(".snap-btn");
     const video = document.querySelector("#video");
     const canvas = document.querySelector("#canvas");
+    const capturedImage = document.querySelector(".captured-image");
     const btn = document.querySelector(".btn");
     const progressBarFill = document.querySelector(".progress-bar-fill");
     const progressInfo = document.querySelector(".progress-info");
@@ -42,8 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
         video.style.display = 'none';
         snapBtn.style.display = 'none';
-
-        imageBase64 = canvas.toDataURL('image/jpeg').split(',')[1];
+        capturedImage.style.display = 'block';
+        capturedImage.src = canvas.toDataURL('image/jpeg');
+        imageBase64 = capturedImage.src.split(',')[1];
         canvas.style.display = 'none';
         // Simulate a file input with the captured image
         fileInput.files = null;
