@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         capturedImage.src = canvas.toDataURL('image/jpeg');
         imageBase64 = capturedImage.src.split(',')[1];
         canvas.style.display = 'none';
-        // Simulate a file input with the captured image
+
         fileInput.files = null;
     });
 
