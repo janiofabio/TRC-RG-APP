@@ -44,11 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
         video.style.display = 'none';
         snapBtn.style.display = 'none';
         capturedImage.style.display = 'block';
-        capturedImage.src = canvas.toDataURL('image/jpeg');
+        capturedImage.src = canvas.toDataURL('image/png');
         imageBase64 = capturedImage.src.split(',')[1];
         canvas.style.display = 'none';
-
-        fileInput.files = null;
+        // Simulate a file input with the captured image
+        //fileInput.files = null;
+        fileInput.files = imageBase64
     });
 
     btn.addEventListener('click', () => {
