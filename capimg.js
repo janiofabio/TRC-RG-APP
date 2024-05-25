@@ -1,44 +1,51 @@
 // capimg.js
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const captureBtn = document.querySelector(".capture-btn");
     const snapBtn = document.querySelector(".snap-btn");
 
-    function setupCamera() {
+    captureBtn.addEventListener('click', async () => {
+        alert("Botão de captura clicado");
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: { ideal: "environment" },
+                    width: { min: 640, ideal: 1920, max: 1920 },
+                    height: { min: 360, ideal: 1080, max: 1080 }
+                }
+            });
+
+            const video = document.querySelector("#video");
+            const snapBtn = document.querySelector(".snap-btn");
+
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                video.play();
+            };
+
+            snapBtn.style.display = 'block';
+            alert("Câmera traseira ativada");
+        } catch (err) {
+            console.error("Erro ao acessar a câmera traseira:", err);
+            alert("Erro ao acessar a câmera traseira: " + err.message);
+        }
+    });
+
+    snapBtn.addEventListener('click', () => {
+        alert("Botão de tirar foto clicado");
+
         const video = document.querySelector("#video");
         const canvas = document.querySelector("#canvas");
         const capturedImage = document.querySelector(".captured-image");
 
-        navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: { ideal: "environment" },
-                focusMode: "continuous"
-            }
-        })
-        .then(stream => {
-            video.style.display = 'block';
-            snapBtn.style.display = 'block';
-            video.srcObject = stream;
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+        capturedImage.src = canvas.toDataURL('image/jpeg');
+        capturedImage.style.display = 'block';
+        canvas.style.display = 'none';
 
-            snapBtn.addEventListener('click', () => {
-                const context = canvas.getContext('2d');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                video.style.display = 'none';
-                snapBtn.style.display = 'none';
-                capturedImage.style.display = 'block';
-                capturedImage.src = canvas.toDataURL('image/jpeg');
-                imageBase64 = capturedImage.src.split(',')[1];
-                canvas.style.display = 'none';
-            });
-        })
-        .catch(err => {
-            console.error("Erro ao acessar a câmera traseira:", err);
-            alert("Erro ao acessar a câmera traseira: " + err.message);
-        });
-    }
-
-    captureBtn.addEventListener('click', () => {
-        setupCamera();
+        alert("Foto capturada e exibida");
     });
 });
