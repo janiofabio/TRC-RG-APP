@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    alert("DOM completamente carregado");
+
     const api = "https://script.google.com/macros/s/AKfycbxGgPnMwV7MLIyhTfPIYqXbRA4-e6RJ8JGfF22h6dfkHH_m-slT6wC2GrsBfuxajhUD/exec";
     const msg = document.querySelector(".message");
     const fileInput = document.querySelector(".file");
@@ -18,11 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isMobile) {
         captureBtn.style.display = 'inline-block';
+        alert("Modo mobile detectado, botão de captura exibido");
     } else {
         captureBtn.style.display = 'none';
+        alert("Modo desktop detectado, botão de captura oculto");
     }
 
     captureBtn.addEventListener('click', async () => {
+        alert("Botão de captura clicado");
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: { facingMode: { ideal: "environment" } }
@@ -30,13 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
             video.style.display = 'block';
             snapBtn.style.display = 'block';
             video.srcObject = stream;
+            alert("Câmera traseira ativada");
         } catch (err) {
             console.error("Erro ao acessar a câmera traseira:", err);
-            alert("Não foi possível acessar a câmera traseira. Verifique as permissões e tente novamente.");
+            alert("Erro ao acessar a câmera traseira: " + err.message);
         }
     });
 
     snapBtn.addEventListener('click', () => {
+        alert("Botão de tirar foto clicado");
         const context = canvas.getContext('2d');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -44,15 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
         video.style.display = 'none';
         snapBtn.style.display = 'none';
         capturedImage.style.display = 'block';
-        capturedImage.src = canvas.toDataURL('image/png');
+        capturedImage.src = canvas.toDataURL('image/jpeg');
         imageBase64 = capturedImage.src.split(',')[1];
         canvas.style.display = 'none';
-        // Simulate a file input with the captured image
-        //fileInput.files = null;
-        fileInput.files = imageBase64
+        alert("Foto capturada e exibida");
+        fileInput.value = ''; // Limpa o arquivo selecionado anteriormente
     });
 
     btn.addEventListener('click', () => {
+        alert("Botão de gerar OCR clicado");
         const file = fileInput.files ? fileInput.files[0] : null;
         if (!file && !imageBase64) {
             alert("Selecione um arquivo PDF ou capture uma imagem primeiro.");
@@ -67,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msg.innerHTML = `Carregando...`;
         progressBarFill.style.width = '0%';
         progressInfo.innerHTML = '';
+        alert("Iniciando processamento OCR");
 
         let startTime = Date.now();
 
@@ -76,14 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
             fr.onload = () => {
                 let res = fr.result;
                 let b64 = res.split("base64,")[1];
+                alert("Arquivo lido, iniciando OCR");
                 processOCR(b64, file.type, file.name, startTime);
             };
         } else if (imageBase64) {
+            alert("Imagem capturada, iniciando OCR");
             processOCR(imageBase64, 'image/jpeg', 'captured_image.jpg', startTime);
         }
     });
 
     function processOCR(base64Data, fileType, fileName, startTime) {
+        alert("Processando OCR");
         let uploadProgress = setInterval(() => {
             let elapsed = Date.now() - startTime;
             let percentComplete = Math.min(100, (elapsed / 2000) * 100); 
@@ -105,11 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(uploadProgress);
             progressBarFill.style.width = '100%';
             msg.innerHTML = ``;
+            alert("OCR concluído, iniciando download do resultado");
             downloadTextFile(data, "OCR_Resultado.txt");
         })
         .catch(error => {
             clearInterval(uploadProgress);
             msg.innerHTML = `Erro ao processar o arquivo.`;
+            alert("Erro ao processar o arquivo: " + error.message);
             console.error('Error:', error);
         });
     }
@@ -125,5 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove();
+        alert("Download do arquivo de texto iniciado");
     }
 });
