@@ -38,22 +38,12 @@
             width: 80%;
             text-align: center;
         }
-        #video {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            display: none;
-        }
-        #canvas {
+        #video, #canvas {
             display: none;
         }
         .captured-image {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
             display: none;
-        }
-        .capture-btn, .snap-btn {
+            max-width: 80%;
             margin-top: 10px;
         }
     </style>
@@ -62,18 +52,21 @@
     <div class="ocr">
         <h1>Imagem PDF OCR</h1>
         <h2 class="message"></h2>
-        <span>Selecione o PDF</span>
+        <span>Selecione o PDF ou Capture uma Imagem</span>
         <input type="file" class="file">
-        <button class="capture-btn" style="display: none;">Capturar Imagem</button>
-        <video id="video"></video>
-        <button class="snap-btn" style="display: none;">Tirar Foto</button>
-        <img class="captured-image">
         <button class="btn">Gerar OCR</button>
+        <button class="capture-btn">Capturar Imagem</button>
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+        <img class="captured-image" src="#" alt="Captured Image">
+        <button class="snap-btn">Tirar Foto</button>
         <div class="progress-bar">
             <div class="progress-bar-fill"></div>
         </div>
         <div class="progress-info"></div>
     </div>
+    <!-- Adicionando FileSaver.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
