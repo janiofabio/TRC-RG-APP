@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.querySelector(".btn");
     const progressBarFill = document.querySelector(".progress-bar-fill");
     const progressInfo = document.querySelector(".progress-info");
-    const resultText = document.createElement("pre");  // Create a pre element to show the result
+    const resultText = document.createElement("pre");
 
-    document.body.appendChild(resultText);  // Append the pre element to the body for displaying text
+    document.body.appendChild(resultText);
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     let imageBase64 = '';
@@ -33,7 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Botão de captura clicado");
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: { ideal: "environment" } }
+                video: {
+                    facingMode: { ideal: "environment" },
+                    focusMode: "continuous" // Enable continuous focus mode
+                }
             });
             video.style.display = 'block';
             snapBtn.style.display = 'block';
@@ -100,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Processando OCR");
         let uploadProgress = setInterval(() => {
             let elapsed = Date.now() - startTime;
-            let percentComplete = Math.min(100, (elapsed / 2000) * 100); 
+            let percentComplete = Math.min(100, (elapsed / 2000) * 100);
             progressBarFill.style.width = `${percentComplete}%`;
             progressInfo.innerHTML = `Carregando: ${Math.round(percentComplete)}% - Tempo restante: ${Math.max(0, ((2000 - elapsed) / 1000).toFixed(1))}s - Tamanho do arquivo: ${(base64Data.length * 0.75 / 1024).toFixed(2)} KB`;
             if (percentComplete >= 100) clearInterval(uploadProgress);
@@ -133,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayText(text) {
         alert("Exibindo resultado do OCR");
         resultText.innerHTML = text;
-        resultText.style.whiteSpace = 'pre-wrap'; // Ensures line breaks are preserved
+        resultText.style.whiteSpace = 'pre-wrap';
         resultText.style.padding = '10px';
         resultText.style.border = '1px solid #ccc';
         resultText.style.marginTop = '10px';
