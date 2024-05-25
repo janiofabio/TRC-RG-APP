@@ -1,40 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCR PDF COM DRIVE API GOOGLE APP SCRIPT</title>
-    <style>
-        /* Estilos CSS aqui */
-    </style>
-</head>
-<body>
-    <div class="ocr">
-        <h1>Imagem PDF OCR</h1>
-        <h2 class="message"></h2>
-        <span>Selecione o PDF</span>
-        <input type="file" class="file">
-        <button class="capture-btn">Capturar Imagem</button>
-        <button class="front-photo-btn">Foto Frente</button>
-        <button class="back-photo-btn">Foto Verso</button>
-        <video id="video"></video>
-        <canvas id="canvas"></canvas>
-        <img class="captured-image">
-        <img class="front-image" style="display: none;">
-        <img class="back-image" style="display: none;">
-        <button class="btn">Gerar OCR</button>
-        <div class="progress-bar">
-            <div class="progress-bar-fill"></div>
-        </div>
-        <div class="progress-info"></div>
-        <pre class="result-text" style="display: none;"></pre>
-    </div>
+// gerocr.js
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector(".btn");
 
-    <script src="capimg.js"></script>
-    <script src="retfotfv.js"></script>
-    <script src="gerocr.js"></script>
-    <script src="viewtxt.js"></script>
+    btn.addEventListener('click', () => {
+        alert("Botão de gerar OCR clicado");
 
-</body>
-</html>
+        // Lógica para gerar OCR e exibir resultado
+    });
+});
