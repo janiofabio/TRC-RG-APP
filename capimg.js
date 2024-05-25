@@ -1,5 +1,5 @@
 // capimg.js
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     const captureBtn = document.querySelector(".capture-btn");
     const snapBtn = document.querySelector(".snap-btn");
 
