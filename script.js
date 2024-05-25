@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.querySelector(".btn");
     const progressBarFill = document.querySelector(".progress-bar-fill");
     const progressInfo = document.querySelector(".progress-info");
-    const resultText = document.createElement("pre");  // Create a pre element to show the result
-
-    document.body.appendChild(resultText);  // Append the pre element to the body for displaying text
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     let imageBase64 = '';
@@ -119,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(uploadProgress);
             progressBarFill.style.width = '100%';
             msg.innerHTML = ``;
-            alert("OCR concluído, exibindo resultado");
-            displayText(data);
+            alert("OCR concluído, iniciando download do resultado");
+            downloadTextFile(data, "OCR_Resultado.txt");
         })
         .catch(error => {
             clearInterval(uploadProgress);
@@ -130,16 +127,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function displayText(text) {
-        alert("Exibindo resultado do OCR");
-        resultText.innerHTML = text;
-        resultText.style.whiteSpace = 'pre-wrap'; // Ensures line breaks are preserved
-        resultText.style.padding = '10px';
-        resultText.style.border = '1px solid #ccc';
-        resultText.style.marginTop = '10px';
-        resultText.style.backgroundColor = '#f3f3f3';
-        resultText.style.width = '80%';
-        resultText.style.maxHeight = '400px';
-        resultText.style.overflowY = 'auto';
+    function downloadTextFile(text, filename) {
+        let blob = new Blob([text], { type: 'text/plain' });
+        alert("Iniciando download do arquivo de texto");
+        if (isMobile) {
+            alert("Modo mobile detectado, usando FileSaver.js");
+            saveAs(blob, filename);
+        } else {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+            alert("Download do arquivo de texto iniciado");
+        }
     }
 });
