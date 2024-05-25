@@ -129,15 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function downloadTextFile(text, filename) {
         let blob = new Blob([text], { type: 'text/plain' });
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-        alert("Download do arquivo de texto iniciado");
+        alert("Iniciando download do arquivo de texto");
+        if (isMobile) {
+            alert("Modo mobile detectado, usando FileSaver.js");
+            saveAs(blob, filename);
+        } else {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+            alert("Download do arquivo de texto iniciado");
+        }
     }
 });
