@@ -38,27 +38,13 @@
             width: 80%;
             text-align: center;
         }
-        video {
-            display: none;
-            width: 80%;
-            max-width: 500px;
-        }
-        canvas {
+        #video, #canvas {
             display: none;
         }
         .captured-image {
             display: none;
-            width: 80%;
-            max-width: 500px;
+            max-width: 80%;
             margin-top: 10px;
-        }
-        .mobile-only {
-            display: none;
-        }
-        @media only screen and (max-width: 767px) {
-            .mobile-only {
-                display: inline-block;
-            }
         }
     </style>
 </head>
@@ -68,12 +54,12 @@
         <h2 class="message"></h2>
         <span>Selecione o PDF ou Capture uma Imagem</span>
         <input type="file" class="file">
-        <button class="capture-btn mobile-only">Capturar Imagem</button>
-        <video id="video" autoplay></video>
-        <button class="snap-btn" style="display: none;">Tirar Foto</button>
-        <canvas id="canvas" style="display: none;"></canvas>
-        <img class="captured-image" alt="Imagem Capturada">
         <button class="btn">Gerar OCR</button>
+        <button class="capture-btn">Capturar Imagem</button>
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+        <img class="captured-image" src="#" alt="Captured Image">
+        <button class="snap-btn">Tirar Foto</button>
         <div class="progress-bar">
             <div class="progress-bar-fill"></div>
         </div>
