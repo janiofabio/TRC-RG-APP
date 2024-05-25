@@ -1,10 +1,82 @@
-// gerocr.js
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.querySelector(".btn");
-
-    btn.addEventListener('click', () => {
-        alert("Botão de gerar OCR clicado");
-
-        // Lógica para gerar OCR e exibir resultado
-    });
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR PDF COM DRIVE API GOOGLE APP SCRIPT</title>
+    <style>
+        .ocr {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .ocr * {
+            margin-top: 5px;
+        }
+        .text {
+            width: 80%;
+            height: 150px;
+        }
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            position: relative;
+            margin-top: 10px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .progress-info {
+            width: 80%;
+            text-align: center;
+        }
+        #video {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: none;
+        }
+        #canvas {
+            display: none;
+        }
+        .captured-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: none;
+        }
+        .capture-btn, .snap-btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ocr">
+        <h1>Imagem PDF OCR</h1>
+        <h2 class="message"></h2>
+        <span>Selecione o PDF</span>
+        <input type="file" class="file">
+        <button class="capture-btn" style="display: none;">Capturar Imagem</button>
+        <video id="video"></video>
+        <button class="snap-btn" style="display: none;">Tirar Foto</button>
+        <img class="captured-image">
+        <button class="btn">Gerar OCR</button>
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-info"></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        alert("HTML completamente carregado");
+    </script>
+</body>
+</html>
