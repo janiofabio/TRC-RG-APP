@@ -33,10 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Botão de captura clicado");
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: { ideal: "environment" },
-                    focusMode: "continuous" // Enable continuous focus mode
-                }
+                video: { facingMode: { exact: "environment" } }
             });
             video.style.display = 'block';
             snapBtn.style.display = 'block';
