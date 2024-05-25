@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.querySelector(".btn");
     const progressBarFill = document.querySelector(".progress-bar-fill");
     const progressInfo = document.querySelector(".progress-info");
+    const resultText = document.createElement("pre");  // Create a pre element to show the result
+
+    document.body.appendChild(resultText);  // Append the pre element to the body for displaying text
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     let imageBase64 = '';
@@ -117,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             progressBarFill.style.width = '100%';
             msg.innerHTML = ``;
             alert("OCR concluído, exibindo resultado");
-            openTextInNewWindow(data);
+            displayText(data);
         })
         .catch(error => {
             clearInterval(uploadProgress);
@@ -127,12 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function openTextInNewWindow(text) {
-        alert("Abrindo resultado do OCR em nova janela");
-        let newWindow = window.open("", "_blank");
-        newWindow.document.write("<html><head><title>OCR Resultado</title></head><body>");
-        newWindow.document.write("<pre>" + text + "</pre>");
-        newWindow.document.write("</body></html>");
-        newWindow.document.close();
+    function displayText(text) {
+        alert("Exibindo resultado do OCR");
+        resultText.innerHTML = text;
+        resultText.style.whiteSpace = 'pre-wrap'; // Ensures line breaks are preserved
+        resultText.style.padding = '10px';
+        resultText.style.border = '1px solid #ccc';
+        resultText.style.marginTop = '10px';
+        resultText.style.backgroundColor = '#f3f3f3';
+        resultText.style.width = '80%';
+        resultText.style.maxHeight = '400px';
+        resultText.style.overflowY = 'auto';
     }
 });
